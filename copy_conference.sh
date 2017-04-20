@@ -17,19 +17,16 @@ do
 
 	if [ $NUMNOZEROS -eq 1 ]
     then
-    	#echo "3 ceros"
     	NUMFILE="000$NUMFILE"
     fi
 
     if [ $NUMNOZEROS -eq 2 ]
     then
-    	#echo "3 ceros"
     	NUMFILE="00$NUMFILE"
     fi
 
     if [ $NUMNOZEROS -eq 3 ]
     then
-    	#echo "3 ceros"
     	NUMFILE="0$NUMFILE"
     fi
 
@@ -40,4 +37,18 @@ do
 	VMDEAULTPATH="$VMDEAULTPATH/msg$NUMFILE.wav"
 
 	cp $CONFIGBRIDGEPATH $VMDEAULTPATH
+	
+	echo "[message]" >> "$VMDEAULTPATH/msg$NUMFILE.txt"
+	echo "origmailbox=$EXTENS[$i]" >> "$VMDEAULTPATH/msg$NUMFILE.txt"
+	echo "context=exten=inter" >> "$VMDEAULTPATH/msg$NUMFILE.txt"
+	echo "macrocontext=" >> "$VMDEAULTPATH/msg$NUMFILE.txt"
+	echo "exten=s-BUSY" >> "$VMDEAULTPATH/msg$NUMFILE.txt"
+	echo "priority=1" >> "$VMDEAULTPATH/msg$NUMFILE.txt"
+	echo "callerchan=SIP/9990" >> "$VMDEAULTPATH/msg$NUMFILE.txt"
+	echo "callerid=" <112>" >> "$VMDEAULTPATH/msg$NUMFILE.txt"
+	echo "origdate=$(date)">> "$VMDEAULTPATH/msg$NUMFILE.txt"
+	echo "origtime=$(date +%s)" >> "$VMDEAULTPATH/msg$NUMFILE.txt"
+	echo "category=Work" >> "$VMDEAULTPATH/msg$NUMFILE.txt"
+	echo "duration=" >> "$VMDEAULTPATH/msg$NUMFILE.txt"
+	
 done
