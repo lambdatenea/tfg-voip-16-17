@@ -34,21 +34,24 @@ do
     then
     	mkdir $VMDEAULTPATH
     fi
-	VMDEAULTPATH="$VMDEAULTPATH/msg$NUMFILE.wav"
 
-	cp $CONFIGBRIDGEPATH $VMDEAULTPATH
+	cp $CONFIGBRIDGEPATH "$VMDEAULTPATH/msg$NUMFILE.wav"
 	
 	echo "[message]" >> "$VMDEAULTPATH/msg$NUMFILE.txt"
 	echo "origmailbox=$EXTENS[$i]" >> "$VMDEAULTPATH/msg$NUMFILE.txt"
-	echo "context=exten=inter" >> "$VMDEAULTPATH/msg$NUMFILE.txt"
+	echo "context=exten-inter" >> "$VMDEAULTPATH/msg$NUMFILE.txt"
 	echo "macrocontext=" >> "$VMDEAULTPATH/msg$NUMFILE.txt"
-	echo "exten=s-BUSY" >> "$VMDEAULTPATH/msg$NUMFILE.txt"
-	echo "priority=1" >> "$VMDEAULTPATH/msg$NUMFILE.txt"
+	echo "exten=$EXTENS[$i]" >> "$VMDEAULTPATH/msg$NUMFILE.txt"
+	echo "rdnis=unknown" >> "$VMDEAULTPATH/msg$NUMFILE.txt"
+	echo "priority=8" >> "$VMDEAULTPATH/msg$NUMFILE.txt"
 	echo "callerchan=SIP/9990" >> "$VMDEAULTPATH/msg$NUMFILE.txt"
-	echo "callerid=" <112>" >> "$VMDEAULTPATH/msg$NUMFILE.txt"
-	echo "origdate=$(date)">> "$VMDEAULTPATH/msg$NUMFILE.txt"
-	echo "origtime=$(date +%s)" >> "$VMDEAULTPATH/msg$NUMFILE.txt"
+	echo 'callerid="Conferencia" <9990>' >> "$VMDEAULTPATH/msg$NUMFILE.txt"
+	echo "origdate=$(date)" >> "$VMDEAULTPATH/msg$NUMFILE.txt"
+	unixtime=$(date +%s)
+	echo "origtime=$unixtime" >> "$VMDEAULTPATH/msg$NUMFILE.txt"
 	echo "category=Work" >> "$VMDEAULTPATH/msg$NUMFILE.txt"
-	echo "duration=" >> "$VMDEAULTPATH/msg$NUMFILE.txt"
+	echo "msg_id=$unixtime-00000000" >> "$VMDEAULTPATH/msg$NUMFILE.txt"
+	echo "flag=" >> "$VMDEAULTPATH/msg$NUMFILE.txt"
+	echo "duration=60" >> "$VMDEAULTPATH/msg$NUMFILE.txt"
 	
 done
