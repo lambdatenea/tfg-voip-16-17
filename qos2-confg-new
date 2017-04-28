@@ -15,7 +15,7 @@ logging buffered 51200 warnings
 enable secret 5 $1$Qu6Q$lOycw58t2IyjU/Teql.Ko0
 enable password qos2
 !
-username cisco privilege 15 secret 5 $1$7HJK$aUGwCNGydvu/RcpyZDE0r0
+username cisco privilege 15 secret 5 $1$ILF7$ZqoGOR2zFnusiTvcQXb4h.
 no aaa new-model
 ip subnet-zero
 ip cef
