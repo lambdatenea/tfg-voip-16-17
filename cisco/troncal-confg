@@ -1,0 +1,163 @@
+
+!
+version 12.3
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname TRONCAL
+!
+boot-start-marker
+boot-end-marker
+!
+logging buffered 51200 warnings
+!
+username cisco privilege 15 secret 5 $1$FjV8$dcaYSj7X0Shf1vCRIv.Ku0
+no aaa new-model
+ip subnet-zero
+ip cef
+!
+!
+ip dhcp excluded-address 10.10.10.1
+!
+ip dhcp pool sdm-pool
+   import all
+   network 10.10.10.0 255.255.255.248
+   default-router 10.10.10.1 
+   lease 0 2
+!
+ip dhcp pool prueba
+   network 10.1.0.0 255.255.255.248
+   default-router 10.1.0.1 
+!
+!
+no ip domain lookup
+ip domain name yourdomain.com
+ip ips po max-events 100
+no ftp-server write-enable
+!
+!
+!
+!
+class-map match-all bronce
+ match ip dscp af31  af32  af33 
+class-map match-all best-effort
+ match ip dscp default 
+class-map match-all plata
+ match ip dscp af21  af22  af23 
+class-map match-all oro
+ match ip dscp af11  af12  af13 
+class-map match-all premium
+ match ip dscp af21  af22  af23 
+!
+!
+policy-map AVVID
+ class plata
+  bandwidth percent 25
+  random-detect dscp-based
+  random-detect dscp 18   20    40    10   
+  random-detect dscp 20   20    40    30   
+  random-detect dscp 22   2     3     3    
+ class oro
+  bandwidth percent 35
+  random-detect dscp-based
+  random-detect dscp 10   20    40    10   
+  random-detect dscp 12   20    40    20   
+ class bronce
+  bandwidth percent 14
+  random-detect dscp-based
+  random-detect dscp 26   20    40    10   
+  random-detect dscp 28   20    40    20   
+  random-detect dscp 30   20    40    30   
+ class premium
+  priority 500
+!
+! 
+!
+!
+!
+interface FastEthernet0
+ switchport access vlan 2
+ no ip address
+ service-policy output AVVID
+ no cdp enable
+!
+interface FastEthernet1
+ no ip address
+ no cdp enable
+!
+interface FastEthernet2
+ no ip address
+ no cdp enable
+!
+interface FastEthernet3
+ no ip address
+ service-policy output AVVID
+ no cdp enable
+!
+interface FastEthernet4
+ ip address 12.12.12.1 255.255.255.252
+ duplex auto
+ speed auto
+ no cdp enable
+!
+interface Vlan1
+ description $ETH-SW-LAUNCH$$INTF-INFO-HWIC 4ESW$
+ ip address 10.1.0.1 255.255.0.0
+ ip tcp adjust-mss 1452
+!
+interface Vlan2
+ ip address 11.11.11.1 255.255.255.252
+!
+ip classless
+ip route 10.2.0.0 255.255.255.248 12.12.12.2
+ip route 10.3.0.0 255.255.255.248 11.11.11.2
+!
+!
+ip http server
+ip http authentication local
+ip http secure-server
+ip http timeout-policy idle 5 life 86400 requests 10000
+!
+no cdp run
+!
+!
+control-plane
+!
+banner login 
+-----------------------------------------------------------------------
+Cisco Router and Security Device Manager (SDM) is installed on this device. 
+This feature requires the one-time use of the username "cisco" 
+with the password "cisco".
+
+Please change these publicly known initial credentials using SDM or the IOS CLI. 
+Here are the Cisco IOS commands.
+
+username <myuser>  privilege 15 secret 0 <mypassword>
+no username cisco
+
+Replace <myuser> and <mypassword> with the username and password you want to use. 
+
+For more information about SDM please follow the instructions in the QUICK START 
+GUIDE for your router or go to http://www.cisco.com/go/sdm 
+-----------------------------------------------------------------------
+
+!
+line con 0
+ login local
+ no modem enable
+ transport preferred all
+ transport output all
+line aux 0
+ transport preferred all
+ transport output all
+line vty 0 4
+ privilege level 15
+ login local
+ transport preferred all
+ transport input telnet ssh
+ transport output all
+!
+scheduler max-task-time 5000
+end
