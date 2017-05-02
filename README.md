@@ -2,7 +2,7 @@
 
 Code | https://github.com/lambdatenea/tfg-voip-16-17
 ---- | ----------------------------------------------
-Last version | 1.0.5
+Last version | 1.0.4
 Issues | https://github.com/lambdatenea/tfg-voip-16-17/issues/
 Asterisk version | Asterisk 13.15.0
 Cisco version | IOS 12.3 (c870)
@@ -13,7 +13,7 @@ Debian version | Debian GNU/Linux 8 (64 bit)
 This is a final project of the University of Castilla la Mancha about the VoIP technology. 
 
 ## Description
-In summary, the implementation of IP telephony systems in business environments brings many advantages, both economically and facilities. Therefore, in order to facilitate the migration of traditional telephony systems to IP voice systems, this TFG proposes the development of a prototype that simulates a business environment with two remote locations, on which a system will be implemented Of low cost IP telephony based on free software. In this way, before testing the change of the system of a company, it will be possible to enhance tests of configurations, as well as demonstrations to those responsible. Figure 1.1 shows the prototype structure.
+In summary, the implementation of IP telephony systems in business environments brings many advantages, both economically and facilities. Therefore, in order to facilitate the migration of traditional telephony systems to IP voice systems, this final project proposes the development of a prototype that simulates a business environment with two remote locations, on which a system will be implemented Of low cost IP telephony based on free software. In this way, before testing the change of the system of a company, it will be possible to enhance tests of configurations, as well as demonstrations to those responsible. Figure 1.1 shows the prototype structure.
 
 ![Figure 1.1](https://github.com/lambdatenea/tfg-voip-16-17/blob/master/voip.png)
 
@@ -62,5 +62,5 @@ Héctor Fernando Bahamonde Rivera.
 
 ## Bibliography
 Asterisk. Contains description about the config's files and examples: https://wiki.asterisk.org/wiki/display/AST/Home
-Voip-info.org. It's the same as the before: https://www.voip-info.org/wiki-Asterisk
+Voip-info.org. It's the same as the before: https://www.voip-info.org/wiki-Asterisk                                  
 Asterisk Sounds. It's a tutorial to install the spanish's language: https://www.asterisksounds.org/es-es/instalar
