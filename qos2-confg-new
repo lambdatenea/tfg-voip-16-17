@@ -108,7 +108,7 @@ interface FastEthernet3
  no cdp enable
 !
 interface FastEthernet4
- ip address 11.11.11.1 255.255.255.252
+ ip address 12.12.12.2 255.255.255.252
  service-policy output VOIP
  duplex auto
  speed auto
@@ -120,7 +120,7 @@ interface Vlan1
  ip tcp adjust-mss 1452
 !
 ip classless
-ip route 10.3.0.0 255.255.255.248 12.12.12.2
+ip route 10.3.0.0 255.255.255.248 12.12.12.1
 !
 !
 ip http server
@@ -157,7 +157,7 @@ GUIDE for your router or go to http://www.cisco.com/go/sdm
 
 !
 line con 0
- no login
+ login local
  no modem enable
  transport preferred all
  transport output all
@@ -166,7 +166,7 @@ line aux 0
  transport output all
 line vty 0 4
  privilege level 15
- no login
+ login local
  transport preferred all
  transport input telnet ssh
  transport output all
