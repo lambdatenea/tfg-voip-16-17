@@ -15,13 +15,15 @@ logging buffered 51200 warnings
 enable secret 5 $1$Qu6Q$lOycw58t2IyjU/Teql.Ko0
 enable password qos2
 !
-username cisco privilege 15 secret 5 $1$ILF7$ZqoGOR2zFnusiTvcQXb4h.
+username cisco privilege 15 secret 5 $1$7HJK$aUGwCNGydvu/RcpyZDE0r0
 no aaa new-model
 ip subnet-zero
 ip cef
 !
 !
 ip dhcp excluded-address 10.2.0.4
+ip dhcp excluded-address 10.2.0.5
+ip dhcp excluded-address 10.2.0.6
 !
 ip dhcp pool sucursalPrincipal
    network 10.2.0.0 255.255.255.248
@@ -35,8 +37,54 @@ no ftp-server write-enable
 !
 !
 !
+class-map match-all ef
+ match access-group 101
+class-map match-all AF21
+ match access-group 108
+class-map match-all AF23
+ match access-group 110
+class-map match-all AF22
+ match access-group 109
+class-map match-all bronce
+ match ip dscp af31  af32  af33 
+class-map match-all best-effort
+ match access-group 104
+class-map match-all AF3
+ match access-group 104
+class-map match-all AF1
+ match access-group 102
+class-map match-all plata
+ match ip dscp af21  af22  af23 
+class-map match-all oro
+ match ip dscp af11  af12  af13 
+class-map match-all premium
+ match ip dscp ef 
 !
 !
+policy-map VOIP
+ class premium
+  priority 500
+ class oro
+  bandwidth percent 35
+ class bronce
+  bandwidth percent 15
+ class plata
+  bandwidth percent 24
+ class best-effort
+   police 56000 1750 1750 conform-action set-dscp-transmit 0 exceed-action drop  violate-action drop 
+policy-map SETDSCP
+ class ef
+  set ip dscp ef
+ class AF21
+  set ip dscp af21
+ class AF1
+  set ip dscp af11
+ class AF3
+  set ip dscp af31
+ class AF22
+  set ip dscp af22
+ class AF23
+  set ip dscp af23
 !
 !
 ! 
@@ -72,15 +120,19 @@ interface Vlan1
  ip tcp adjust-mss 1452
 !
 ip classless
-ip route 10.3.0.0 255.255.255.248 11.11.11.2
+ip route 10.3.0.0 255.255.255.248 12.12.12.2
 !
 !
 ip http server
-ip http authentication local
 ip http secure-server
-ip http timeout-policy idle 5 life 86400 requests 10000
 !
-no cdp run
+access-list 101 permit udp any any range 16384 16482
+access-list 102 permit tcp any any eq tacacs
+access-list 104 permit tcp any any eq www
+access-list 105 permit ip any any
+access-list 108 permit tcp any any eq telnet
+access-list 109 permit tcp any any eq smtp
+access-list 110 permit tcp any any eq ftp
 !
 !
 control-plane
@@ -105,7 +157,7 @@ GUIDE for your router or go to http://www.cisco.com/go/sdm
 
 !
 line con 0
- login local
+ no login
  no modem enable
  transport preferred all
  transport output all
@@ -114,7 +166,7 @@ line aux 0
  transport output all
 line vty 0 4
  privilege level 15
- login local
+ no login
  transport preferred all
  transport input telnet ssh
  transport output all
