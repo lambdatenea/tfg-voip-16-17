@@ -133,7 +133,7 @@ ip http authentication local
 ip http secure-server
 ip http timeout-policy idle 5 life 86400 requests 10000
 !
-access-list 101 permit udp any any range 16384 32768
+access-list 101 permit udp any any range 16384 16483
 access-list 102 permit tcp any any eq tacacs
 access-list 104 permit tcp any any eq www
 access-list 105 permit ip any any
