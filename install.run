@@ -1,0 +1,14 @@
+#!/bin/bash
+
+if [ $USER == "root" ]
+then	
+	apt-get install asterisk -y
+	apt-get install asterisk-core-sounds-es-gsm keepalived fail2ban -y 
+	cp ./asterisk/* /etc/asterisk
+	cp ./debian/keepalived.conf /etc/keepalived/keepalived.conf
+	cp ./debian/jail.conf /etc/fail2ban/jail.conf
+	cp ./debian/copy_conference.bash /etc
+	crontab -e
+else
+	echo "You are not root."
+fi
