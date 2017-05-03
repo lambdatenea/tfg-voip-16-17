@@ -20,6 +20,12 @@ In summary, the implementation of IP telephony systems in business environments 
 ## Configuration
 
 1. Install Asterisk in Debian:
+Commands:
+```
+$ sudo apt-get install asterisk asterisk-core-sounds-es-gsm -y
+```
+
+Handly:
 https://www.howtoforge.com/tutorial/how-to-install-asterisk-on-debian/
 
 2. Install keepalived and fail2ban:
